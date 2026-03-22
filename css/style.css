@@ -1,0 +1,135 @@
+
+
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(to right, #4e54c8, #8f94fb);
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  background: #f5f6fa;
+  margin: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  background: #eee;
+  padding: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-left: 10px;
+  margin-right: auto;
+}
+
+.sidebar li {
+  margin: 15px 0;
+  cursor: pointer;
+}
+.sidebar div li.active {
+  background: #4e54c8;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+ ul .list-icons{
+    float: left;
+    padding-right: 20px;
+ }
+ ul .meeting-icons{
+  float: left;
+  padding-right: 16px;
+ }
+  ul .trash-icons{
+  float: left;
+  padding-right: 21px;
+ }
+/* Main */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+.add-task {
+  display: flex;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.add-task input {
+  flex: 0 0 70%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.add-task button {
+  padding: 10px;
+  flex:0 0 30%;
+  background: #7379ec;
+  /* border-radius: 6px; */
+  transition: 0.3s;
+  color: white;
+  border: none;
+  font-size: 17px;
+}
+
+.add-task button:hover {
+  background: #3b40a0;
+}
+.task {
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.task span {
+  font-weight: 500;
+}
+
+/* Task List */
+#taskList {
+  list-style: none;
+  padding: 0;
+}
+
+.task {
+  background: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 5px;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+/* Schedule */
+.schedule {
+  width: 250px;
+  background: #fafafa;
+  padding: 20px;
+}
+
+.card {
+  background: #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  transition: transform .3s ease;
+}
+.card:hover{
+   transform: scale(0.9);
+}

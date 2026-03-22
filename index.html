@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+      <div>
+        <i class="fa-regular fa-envelope list-icons"></i>
+        <li onclick="setFilter('inbox')">Inbox</li>
+      </div>
+      <div>
+          <i class="fa-regular fa-star meeting-icons" onclick="toggleImportant(`${index}`)"></i>
+        <li onclick="setFilter('today')">Today</li>
+      </div>
+      <div>
+        <i class="fa-regular fa-calendar list-icons"></i>
+        <li onclick="setFilter('upcoming')">Upcoming</li>
+      </div>
+      <div>
+        <i class="fa-regular fa-hashtag list-icons"></i>
+        <li onclick="setFilter('important')">Important</li>
+      </div>
+      <div>
+        <i class="fa-solid fa-users meeting-icons"></i>
+        <li>Meeting</li>
+      </div>
+      <div>
+        <i class="fa-regular fa-trash-can trash-icons"></i>
+        <li>Trash</li>
+      </div>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <h1>Today Tasks</h1>
+
+    <!-- Add Task -->
+    <div class="add-task">
+      <input type="text" id="taskInput" placeholder="Add new task...">
+      <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <!-- Task List -->
+    <ul id="taskList"></ul>
+
+  </div>
+
+  <!-- Schedule -->
+  <div class="schedule">
+    <h2>Schedule</h2>
+
+    <div class="card">
+      <p>08:00 - 09:00</p>
+      <h3>Product Review</h3>
+    </div>
+
+    <div class="card">
+      <p>10:00 - 11:00</p>
+      <h3>Design Meeting</h3>
+    </div>
+  </div>
+</div>
+
+<script src="./js/script.js"></script>
+</body>
+</html>
