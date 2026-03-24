@@ -58,29 +58,29 @@ body {
   padding: 20px;
 }
 
-.add-task {
+#add-task {
   display: flex;
   margin-bottom: 20px;
   margin-top: auto;
   width: 100%;
 }
 
-.add-task #taskText {
+#add-task #taskText {
   flex: 0 0 50%;
   padding: 10px;
   box-sizing: border-box;
 }
-.add-task input{
+#add-task input{
   margin-right:7px;
   margin-left: auto;
 }
 
-.add-task #taskTime{
+#add-task #taskTime{
    flex: 0 0 25%;
    padding: 10px;
    box-sizing: border-box;
 }
-.add-task button {
+#add-task button {
   padding: 10px;
   flex:0 0 20%;
   background: #7379ec;
@@ -91,7 +91,7 @@ body {
   font-size: 17px;
 }
 
-.add-task button:hover {
+#add-task button:hover {
   background: #3b40a0;
 }
 .task {
@@ -110,6 +110,16 @@ body {
 #taskList {
   list-style: none;
   padding: 0;
+}
+
+.task_info {
+  display: flex;
+  gap: 10px;
+}
+
+.task_actions {
+  display: flex;
+  gap: 10px;
 }
 
 .task {

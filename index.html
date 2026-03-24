@@ -50,14 +50,16 @@
     <h1>Today Tasks</h1>
 
     <!-- Add Task -->
-    <div class="add-task">
+    <div id="add-task">
       <input type="text" id="taskText" placeholder="Add new task...">
-      <input type="datetime-local" id="taskTime">
+      <input type="datetime-local" id="taskTime" required />
       <button onclick="addTask()">Add Task</button>
     </div>
 
-    <!-- Task List -->
-    <ul id="taskList"></ul>
+       <ol id="display_taskList">
+        <!-- new task list will be add here -->
+      </ol>
+
 
   </div>
 
