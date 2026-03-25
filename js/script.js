@@ -6,11 +6,23 @@ const task_list=document.getElementById("display_taskList");
 
 
 const addTask =()=>{
-    const task_name=addedTask.value;
-    const task_time=addedTime.value;
-    console.log( "task time added",task_name);
+    const task_name=addedTask.value.trim();
+    const task_time=addedTime.value.trim();
 
-     if (task_name.length === 0) return;
+    //  if (task_name.length === 0) return;
+
+     if(task_name === "" && task_time ==="") {
+       alert("please enter task, it's date and time")
+      return;
+      }
+      if (task_name=== ""){
+        alert("please enter task name")
+        return;
+      }
+      if(task_time === ""){
+        alert("please enter task time");
+        return;
+      }
     
 
 // create array of object to push task list into array
@@ -35,12 +47,19 @@ console.log("taskList array", taskList)
 
 // create list item dynami  callly and render as UI
 const renderTaskList=()=>{
+
+   if (taskList.length === 0){
+     task_list.innerHTML = "<p>No task yet </p>" ;
+     console.log("no task yet")
+      return;
+    }
+
       task_list.innerHTML= "";  
 
     //  use for each for render everry task
     taskList.forEach((task) =>{
       const list_create= document.createElement("li");
-      // const list_row=document.createElement("div");
+
 
       list_create.innerHTML=`
         <div class="list_row">
