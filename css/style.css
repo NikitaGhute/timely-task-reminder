@@ -212,3 +212,20 @@ body {
   box-shadow:2px 3px 7px 1px #504e4e;
    transform: scale(1.0);
 }
+
+/* media query */
+
+@media (max-width: 1023px) and (min-width:768px){
+  #add-task #taskText {
+    flex: 0 0 35%;
+    box-sizing: border-box;
+    padding: 0px 13px;
+}
+.sidebar {
+    width: 160px;
+ }
+ .main {
+    flex: 1;
+    padding: -1px 11px;
+}
+}

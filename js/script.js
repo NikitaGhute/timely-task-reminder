@@ -20,11 +20,12 @@ const addTask =()=>{
 
       // for valid data in task name field
 
-      // const validText = /[a-zA-Z0-9]/;
-      // if (!validText.test(task_name)){
-      //   alert("Task mush contain letters or numbers");
-      //   return;
-      // }
+      const validText = /[a-zA-Z]/;   
+         //^(?![0-9]- not accept numbers only, (?!\\p[Emoji_Component}]+$)- not accept emojis
+      if (!validText.test(task_name)){
+        alert("Task mush contain atleast one letter.");
+        return;
+      }
 
       const now = new Date();   //consider current date
       const selectedTime =new Date(task_time);
@@ -138,5 +139,3 @@ const renderTaskList=()=>{
   }
 
 renderTaskList();
-// delete_task();
-// edit_task();
