@@ -4,74 +4,72 @@ const addedTask = document.getElementById("taskText");
 const addedTime=  document.getElementById("taskTime");
 const task_list=  document.getElementById("display_taskList");
 
+const addTask = () => {
+  const task_name = addedTask.value.trim();
+  const task_time = addedTime.value.trim();
 
-const addTask =()=>{
-    const task_name=addedTask.value.trim();
-    const task_time=addedTime.value.trim();
+  if (task_name === "" && task_time === "") {
+    alert("please enter task and time");
+    return;
+  }
 
-     if(task_name === "" && task_time ==="") {
-       alert("please enter task, it's date and time")
-      return;
-      }
-      if (task_name=== ""){
-        alert("please enter task name")
-        return;
-      }
+  if (task_name === "") {
+    alert("please enter task name");
+    return;
+  }
 
-      // for valid data in task name field
+  if (!/[a-zA-Z]/.test(task_name)) {
+    alert("Task must contain at least one letter");
+    return;
+  }
 
-      const validText = /[a-zA-Z]/;   
-         //^(?![0-9]- not accept numbers only, (?!\\p[Emoji_Component}]+$)- not accept emojis
-      if (!validText.test(task_name)){
-        alert("Task mush contain atleast one letter.");
-        return;
-      }
+  if (task_time === "") {
+    alert("please enter task time");
+    return;
+  }
 
-      const now = new Date();   //consider current date
-      const selectedTime =new Date(task_time);
-      
-      if(selectedTime <now){
-        alert("please select future time");
-        return;
-      }
-      if(task_time === ""){
-        alert("please enter task time");
-        return;
-      }
-    
-      
-  // edit selected task,
+  const now = new Date();
+  const selectedTime = new Date(task_time);
+
+  if (selectedTime < now) {
+    alert("please select future time");
+    return;
+  }
+
   if (editId) {
-    taskList = taskList.map(task =>{
-      if (task.id === editId){
+    // ✅ EDIT
+    taskList = taskList.map(task => {
+      if (task.id === editId) {
         return {
-          // console.log("matched task id")
           ...task,
-          taskName :task_name,
+          taskName: task_name,
           taskTime: task_time
         };
       }
       return task;
     });
 
-    editId =null;
-  }
-  else{
-    // create array of object to push task list into array
-  const task_obj={
-    id:Date.now(),
-    taskName:task_name,   //key:value, key our given var like and value is the task_name.value
-    taskTime:task_time,
-  }
+    editId = null;
+
+  } else {
+    // ✅ ADD
+    const task_obj = {
+      id: Date.now(),
+      taskName: task_name,
+      taskTime: task_time
+    };
+
     taskList.push(task_obj);
   }
+
+  // ✅ SAVE AFTER UPDATE
+  localStorage.setItem("tasks", JSON.stringify(taskList));
+
   renderTaskList();
 
   addedTask.value = "";
   addedTime.value = "";
-
 };
-
 
 
   // edit task function to be called on click
@@ -92,8 +90,9 @@ const addTask =()=>{
      
 
 // create array
-let taskList= [];
+// let taskList= [];
 let editId = null;
+let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 console.log("taskList array", taskList)
 
 
@@ -131,11 +130,19 @@ const renderTaskList=()=>{
      addedTime.value="";
 
 
-// delete task
-  const delete_task=(id)=>{
-    taskList=taskList.filter(item=> item.id !== id);   //item.id !==id- keeps data of task whose id is not eqaul to clicked id or to be delete id.
-    console.log("task deleted")
-    renderTaskList();
-  }
+// // delete task
+//   const delete_task=(id)=>{
+//     taskList=taskList.filter(item=> item.id !== id);   //item.id !==id- keeps data of task whose id is not eqaul to clicked id or to be delete id.
+//     console.log("task deleted")
+//     renderTaskList();
+//   }
 
-renderTaskList();
+const delete_task = (id) => {
+  taskList = taskList.filter(item => item.id !== id);
+
+  // ✅ SAVE AFTER DELETE
+  localStorage.setItem("tasks", JSON.stringify(taskList));
+
+  renderTaskList();
+};
+// renderTaskList();
