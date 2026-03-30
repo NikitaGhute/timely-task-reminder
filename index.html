@@ -18,7 +18,7 @@
         <i class="fa-regular fa-envelope list-icons"></i>
         <li onclick="setFilter('inbox')">Inbox</li>
       </div>
-      <div>
+      <div id="all_inbox">
           <i class="fa-regular fa-star meeting-icons" onclick="toggleImportant(`${index}`)"></i>
         <li onclick="setFilter('today')">Today</li>
       </div>
@@ -30,6 +30,13 @@
         <i class="fa-regular fa-hashtag list-icons"></i>
         <li onclick="setFilter('important')">Important</li>
       </div>
+       <div>
+        <i class="fa-solid fa-list-check list-icons"></i>
+        <li>Completed</li>
+      </div>
+
+
+
       <div>
         <i class="fa-solid fa-users meeting-icons"></i>
         <li>Meeting</li>
@@ -47,7 +54,7 @@
   <!-- Main Content -->
   <div class="main">
 
-    <h1>Today Tasks</h1>
+    <h1 >All Tasks</h1>
 
     <!-- Add Task -->
     <div id="add-task">
@@ -79,5 +86,6 @@
 </div>
 
 <script src="./js/script.js"></script>
+<script src="./js/sidebar_script.js"></script>
 </body>
 </html>

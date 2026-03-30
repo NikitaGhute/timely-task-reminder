@@ -37,7 +37,7 @@ const addTask = () => {
   }
 
   if (editId) {
-    // ✅ EDIT
+    // edit task
     taskList = taskList.map(task => {
       if (task.id === editId) {
         return {
@@ -52,7 +52,7 @@ const addTask = () => {
     editId = null;
 
   } else {
-    // ✅ ADD
+    // object for task fields
     const task_obj = {
       id: Date.now(),
       taskName: task_name,
@@ -62,11 +62,10 @@ const addTask = () => {
     taskList.push(task_obj);
   }
 
-  // ✅ SAVE AFTER UPDATE
+  //save after update task
   localStorage.setItem("tasks", JSON.stringify(taskList));
-
   renderTaskList();
-
+  
   addedTask.value = "";
   addedTime.value = "";
 };
@@ -92,7 +91,7 @@ const addTask = () => {
 // create array
 // let taskList= [];
 let editId = null;
-let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
+let taskList = JSON.parse(localStorage.getItem("tasks")) || [];  //conversion happends from string to array
 console.log("taskList array", taskList)
 
 
@@ -130,19 +129,11 @@ const renderTaskList=()=>{
      addedTime.value="";
 
 
-// // delete task
-//   const delete_task=(id)=>{
-//     taskList=taskList.filter(item=> item.id !== id);   //item.id !==id- keeps data of task whose id is not eqaul to clicked id or to be delete id.
-//     console.log("task deleted")
-//     renderTaskList();
-//   }
-
 const delete_task = (id) => {
   taskList = taskList.filter(item => item.id !== id);
 
-  // ✅ SAVE AFTER DELETE
+  // save after delete
   localStorage.setItem("tasks", JSON.stringify(taskList));
-
   renderTaskList();
 };
 // renderTaskList();
