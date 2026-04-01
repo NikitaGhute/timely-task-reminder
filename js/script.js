@@ -13,18 +13,13 @@ const addTask = () => {
     return;
   }
 
-  if (task_name === "") {
-    alert("please enter task name");
-    return;
-  }
-
-  if (!/[a-zA-Z]/.test(task_name)) {
-    alert("Task must contain at least one letter");
-    return;
-  }
-
   if (task_time === "") {
     alert("please enter task time");
+    return;
+  }
+
+   if (!/[a-zA-Z]/.test(task_name)) {
+    alert("Task must contain at least one letter");
     return;
   }
 
@@ -52,22 +47,23 @@ const addTask = () => {
     editId = null;
 
   } else {
-    // object for task fields
+    // object for task fields 
     const task_obj = {
       id: Date.now(),
       taskName: task_name,
-      taskTime: task_time
+      taskTime: task_time,
+      isImportant:false,
     };
 
     taskList.push(task_obj);
   }
 
   //save after update task
-  localStorage.setItem("tasks", JSON.stringify(taskList));
+  localStorage.setItem("tasks", JSON.stringify(taskList));   //update task into array       
   renderTaskList();
   
-  addedTask.value = "";
-  addedTime.value = "";
+  addedTask.value = "";  //reset value of task name field
+  addedTime.value = "";  //reset value of task time field
 };
 
 
@@ -90,24 +86,60 @@ const addTask = () => {
 
 // create array
 // let taskList= [];
+let taskList = JSON.parse(localStorage.getItem("tasks")) || [];  //conversion happends from string to array as localhost dont understand string
 let editId = null;
-let taskList = JSON.parse(localStorage.getItem("tasks")) || [];  //conversion happends from string to array
+let currentFilter ="inbox";    //set default value of filter as inbox
 console.log("taskList array", taskList)
+
+const setFilter = (type)=>{
+  console.log("clicked on filter", type)
+    currentFilter=type;     //type, this value come from html, 
+    renderTaskList();
+}
 
 
 // create list item dynamicallly and render as UI
 const renderTaskList=()=>{
   console.log("render called");
-      task_list.innerHTML= "";  
+      task_list.innerHTML= "";      //ui list will be empty before enter task
       
-   if (taskList.length === 0){
-     task_list.innerHTML = "<p>No task yet </p>" ;
-     console.log("no task yet")
-      return;
-    }
 
-    //  use for each for render everry task
-    taskList.forEach((task) =>{
+    //create filter task
+    let filteredTask= [];
+
+    switch (currentFilter){
+      case "today":
+        console.log("set filter for input")
+        filteredTask = taskList.filter(task =>
+          new Date(task.taskTime).toDateString() === new Date().toDateString()
+        );
+        break;
+        case "upcoming":
+         console.log("set filter for upcoming")
+          filteredTask = taskList.filter(task =>
+            new Date (task.taskTime) > new Date()
+          );
+          break;
+          case "important":
+         console.log("set filter for important")
+            filteredTask = taskList.filter(task =>
+              task.isImportant === true
+            );
+            break;
+            
+            default:
+              filteredTask =taskList; 
+      }
+      
+      if (filteredTask.length === 0){
+        task_list.innerHTML = "<p>No task yet </p>" ;
+        console.log("no task yet")
+        return;
+      }
+      
+      
+    //  use for each for render every task
+    filteredTask.forEach((task) =>{
       const list_create= document.createElement("li");
 
       list_create.innerHTML=`
@@ -120,7 +152,11 @@ const renderTaskList=()=>{
       `
       task_list.appendChild(list_create);
     });
-}
+
+      console.log("currentFilter:", currentFilter);
+      console.log("taskList:", taskList);
+       console.log("filteredTasks:", filteredTask);
+};
 
 
   //render UI
@@ -129,11 +165,11 @@ const renderTaskList=()=>{
      addedTime.value="";
 
 
-const delete_task = (id) => {
+const delete_task = (id) => {          //id works as parameter
   taskList = taskList.filter(item => item.id !== id);
 
   // save after delete
   localStorage.setItem("tasks", JSON.stringify(taskList));
-  renderTaskList();
+  renderTaskList();         //update list after remove items
 };
 // renderTaskList();
