@@ -66,6 +66,21 @@ const addTask = () => {
   addedTime.value = "";  //reset value of task time field
 };
 
+// toggle button for important task
+const toggleImportant=(id) =>{
+  taskList = taskList.map(task=>{
+    if(task.id === id){
+      return{
+        ...task,
+        isImportant :!task.isImportant
+      };
+    }
+    return task;
+  });
+  localStorage.setItem("tasks", JSON.stringify(taskList));
+  renderTaskList();
+};
+
 
   // edit task function to be called on click
     const edit_task = (id)=>{
@@ -146,6 +161,10 @@ const renderTaskList=()=>{
         <div class="list_row">
           <span>${task.taskName}</span>
           <span>${task.taskTime}</span>
+          <button onclick="toggleImportant(${task.id})">
+            ${task.isImportant ? '<i class="fa-solid fa-star important"></i>' : '<i class="fa-regular fa-star"></i>'
+            }
+          </button>
           <button class="edit_task" onclick="edit_task(${task.id})"><i class="fa-regular fa-pen-to-square"></i></button>
           <button class="delete_task" onClick="delete_task(${task.id})"><i class="fa-regular fa-trash-can"></i></button>
         </div>

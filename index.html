@@ -27,7 +27,7 @@
         <li onclick="setFilter('upcoming')">Upcoming</li>
       </div>
       <div>
-        <i class="fa-regular fa-hashtag list-icons"></i>
+        <i class="fa-solid fa-exclamation important-icon"></i>
         <li onclick="setFilter('important')">Important</li>
       </div>
        <div>
@@ -57,12 +57,12 @@
     <div id="add-task">
       <input type="text" id="taskText" placeholder="Add new task...">
       <input type="datetime-local" id="taskTime" required />
-      <button onclick="addTask()">Add Task</button>
+      <button onClick="addTask()">Add Task</button>
     </div>
 
-       <ol id="display_taskList">
+       <ul id="display_taskList">
         <!-- new task list will be add here -->
-      </ol>
+      </ul>
 
   </div>
 

@@ -44,6 +44,11 @@ body {
     float: left;
     padding-right: 20px;
  }
+ ul .important-icon{
+  padding-right: 32px;
+  float: left;
+ }
+ 
  ul .meeting-icons{
   float: left;
   padding-right: 16px;
@@ -65,10 +70,11 @@ body {
   width: 100%;
 }
 
+
 #display_taskList {
   padding: 0;
   width: 100%;
-  max-width: 678px;   /* 🔥 control width here */
+  max-width: 740px;   /* 🔥 control width here */
   margin: 20px 16px;  /* center horizontally */
 }
 
@@ -106,7 +112,7 @@ body {
   font-size: 14px;
 }
 
-.list_row button {
+.list_row button{
   flex:0;
   border: none;
   background: transparent;
