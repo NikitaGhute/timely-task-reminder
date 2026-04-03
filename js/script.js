@@ -53,6 +53,7 @@ const addTask = () => {
       taskName: task_name,
       taskTime: task_time,
       isImportant:false,
+      isCompleted:false,
     };
 
     taskList.push(task_obj);
@@ -80,6 +81,22 @@ const toggleImportant=(id) =>{
   localStorage.setItem("tasks", JSON.stringify(taskList));
   renderTaskList();
 };
+
+
+// function for completed task
+  const toggleCompleted=(id)=>{
+    taskList = taskList.map(task =>{
+      if (task.id === id){
+        return{
+          ...task,
+          isCompleted :!task.isCompleted
+        };
+      }
+      return task;
+    });
+    localStorage.setItem("tasks", JSON.stringify(taskList));
+    renderTaskList();
+  };
 
 
   // edit task function to be called on click
@@ -141,13 +158,19 @@ const renderTaskList=()=>{
               task.isImportant === true
             );
             break;
-            
+            case "completed":
+              filteredTask = taskList.filter(task =>
+                task.isCompleted === true
+              );
+              console.log("set filter for completed task")
+            break;
+
             default:
               filteredTask =taskList; 
       }
       
       if (filteredTask.length === 0){
-        task_list.innerHTML = "<p>No task yet </p>" ;
+        task_list.innerHTML = "<p>📭 No tasks for today. Add something to stay productive!</p>" ;
         console.log("no task yet")
         return;
       }
@@ -164,8 +187,12 @@ const renderTaskList=()=>{
           <button onclick="toggleImportant(${task.id})">
             ${task.isImportant ? '<i class="fa-solid fa-star important"></i>' : '<i class="fa-regular fa-star"></i>'
             }
-          </button>
-          <button class="edit_task" onclick="edit_task(${task.id})"><i class="fa-regular fa-pen-to-square"></i></button>
+            <button onclick="toggleCompleted(${task.id})">
+              ${task.isCompleted 
+                ? '<i class="fa-solid fa-circle-check completed-icon"></i>' 
+                : '<i class="fa-regular fa-circle"></i>'}
+            </button>
+            <button class="edit_task" onclick="edit_task(${task.id})"><i class="fa-regular fa-pen-to-square"></i></button>
           <button class="delete_task" onClick="delete_task(${task.id})"><i class="fa-regular fa-trash-can"></i></button>
         </div>
       `
