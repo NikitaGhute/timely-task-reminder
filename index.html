@@ -5,6 +5,7 @@
   <title>Task Manager</title>
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
 
@@ -12,46 +13,40 @@
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <h2>Menu</h2>
+    <h1>Menu</h1>
     <ul>
-      <div>
-        <i class="fa-regular fa-envelope list-icons"></i>
-        <li onclick="setFilter('inbox')">Inbox</li>
-      </div>
-      <div id="all_inbox">
-          <i class="fa-regular fa-star meeting-icons" onclick="toggleImportant(`${index}`)"></i>
-        <li onclick="setFilter('today')">Today</li>
-      </div>
-      <div>
-        <i class="fa-regular fa-calendar list-icons"></i>
-        <li onclick="setFilter('upcoming')">Upcoming</li>
-      </div>
-      <div>
-        <i class="fa-solid fa-exclamation important-icon"></i>
-        <li onclick="setFilter('important')">Important</li>
-      </div>
-       <div>
-        <i class="fa-solid fa-list-check list-icons"></i>
-        <li onclick="setFilter('completed')">Completed</li>
-      </div>
-      <div>
-        <i class="fa-solid fa-users meeting-icons"></i>
-        <li>Meeting</li>
-      </div>
-      <div>
-        <i class="fa-regular fa-trash-can trash-icons"></i>
-        <li>Trash</li>
-      </div>
-      <li></li>
-      <li></li>
-      <li></li>
+  <li onclick="setFilter('inbox', this)">
+    <i class="fa-regular fa-envelope"></i>
+    <span>Inbox</span>
+  </li>
+
+  <li onclick="setFilter('today', this)">
+    <i class="fa-regular fa-calendar"></i>
+    <span>Today</span>
+  </li>
+
+  <li onclick="setFilter('important', this)">
+    <i class="fa-solid fa-star"></i>
+    <span>Important</span>
+  </li>
+
+    <li onclick="setFilter('completed', this)">
+    <i class="fa-solid fa-list-check"></i>
+    <span>Completed</span>
+   </li>
+
+     <li>
+    <i class="fa-solid fa-trash"></i>
+    <span>Trash</span>
+    </li>
+
     </ul>
   </div>
 
   <!-- Main Content -->
   <div class="main">
 
-    <h1 >Tasks Manager</h1>
+    <h1 id="pageTitle">Tasks Manager </h1>
 
     <!-- Add Task -->
     <div id="add-task">
@@ -83,5 +78,6 @@
 </div>
 
 <script src="./js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animateplus/2.0.1/animateplus.min.js"></script>
 </body>
 </html>

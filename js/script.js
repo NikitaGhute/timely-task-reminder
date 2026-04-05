@@ -3,6 +3,7 @@
 const addedTask = document.getElementById("taskText");
 const addedTime=  document.getElementById("taskTime");
 const task_list=  document.getElementById("display_taskList");
+const page_title =document.getElementById("pageTitle");
 
 const addTask = () => {
   const task_name = addedTask.value.trim();
@@ -123,9 +124,17 @@ let editId = null;
 let currentFilter ="inbox";    //set default value of filter as inbox
 console.log("taskList array", taskList)
 
-const setFilter = (type)=>{
+const setFilter = (type, element)=>{
   console.log("clicked on filter", type)
     currentFilter=type;     //type, this value come from html, 
+
+    //toggle between active and in active style
+    // class="animate_animated animate_zoomIn" 
+    document.querySelectorAll(".sidebar li").forEach(li =>{
+      li.classList.remove("active");
+    });
+    element.classList.add("active");
+
     renderTaskList();
 }
 
@@ -173,8 +182,7 @@ const renderTaskList=()=>{
         task_list.innerHTML = "<p>📭 No tasks for today. Add something to stay productive!</p>" ;
         console.log("no task yet")
         return;
-      }
-      
+      }      
       
     //  use for each for render every task
     filteredTask.forEach((task) =>{
@@ -187,6 +195,7 @@ const renderTaskList=()=>{
           <button onclick="toggleImportant(${task.id})">
             ${task.isImportant ? '<i class="fa-solid fa-star important"></i>' : '<i class="fa-regular fa-star"></i>'
             }
+            </button>
             <button onclick="toggleCompleted(${task.id})">
               ${task.isCompleted 
                 ? '<i class="fa-solid fa-circle-check completed-icon"></i>' 
@@ -198,6 +207,21 @@ const renderTaskList=()=>{
       `
       task_list.appendChild(list_create);
     });
+
+       // display page name dynamically
+    const filterName= currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
+    const count = filteredTask.length;
+    page_title.innerText=`Task Manager - ${filterName} (${count})`;
+
+    if (count === 0){
+      page_title.innerText=`Task Manager - ${filterName} (0)`;
+    }
+
+      page_title.classList.remove("animate__anmiated", "animate__fadeInDown")
+        //triger animation again and again
+        void page_title.offsetWidth;
+        page_title.classList.add("animate__animated", "animate__fadeInDown")
+
 
       console.log("currentFilter:", currentFilter);
       console.log("taskList:", taskList);

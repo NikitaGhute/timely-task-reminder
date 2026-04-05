@@ -27,36 +27,71 @@ body {
   padding: 0;
   margin-left: 10px;
   margin-right: auto;
+} 
+.sidebar li {
+  display: flex;
+  align-items: center;
+  gap: 12px;              /* space between icon & text */
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position:relative;
+  margin-top: 3px;
+  margin-bottom: auto;
+}
+.sidebar li i {
+  width: 24px;          
+  /* text-align: center;     */
+  font-size: 16px;
+}
+.sidebar li span {
+  flex: 1;                
+}
+.sidebar li:hover{
+  background-color: #f5f6fa;
+  color:#fff;
+  transform: translateX(1px);
+  /* padding: 2px; */
+}
+.sidebar li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 3px;
+
+  background: linear-gradient(
+    90deg,
+    red,orange, yellow, green,blue,indigo,violet
+  );
+    transition: width 0.4s ease;
 }
 
-.sidebar li {
-  margin: 15px 0;
-  cursor: pointer;
+/* hover effect */
+.sidebar li:hover::after {
+  width: 100%;
 }
-.sidebar div li.active {
-  background: #4e54c8;
-  color: white;
+.sidebar li.active {
+  background: #5a64bd;
+  color: rgb(19, 10, 10);
   padding: 8px;
+  transform: translateX(3px);
   border-radius: 5px;
+  color:#fff;
+}
+.sidebar li:hover:not(.active){
+  background-color: #879bed;
+  transform: translateX(2px);
 }
 
  ul .list-icons{
     float: left;
     padding-right: 20px;
+    width: 100%;
  }
- ul .important-icon{
-  padding-right: 32px;
-  float: left;
- }
- 
- ul .meeting-icons{
-  float: left;
-  padding-right: 16px;
- }
-  ul .trash-icons{
-  float: left;
-  padding-right: 21px;
- }
+
 /* Main */
 .main {
   flex: 1;
@@ -69,13 +104,14 @@ body {
   margin-top: auto;
   width: 100%;
 }
-
-
 #display_taskList {
   padding: 0;
   width: 100%;
   max-width: 780px;   /* 🔥 control width here */
   margin: 20px 16px;  /* center horizontally */
+}
+.page_title{
+  transition: cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 #display_taskList li {
@@ -138,10 +174,6 @@ button:hover i {
   background: #e9edff;
   /* color:#000; */
 }
-.list_row:hover button i {
-  /* color: #f5f6fa; */
-}
-
 #add-task #taskText {
   flex: 0 0 50%;
   padding: 10px;
