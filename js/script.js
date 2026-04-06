@@ -55,6 +55,7 @@ const addTask = () => {
       taskTime: task_time,
       isImportant:false,
       isCompleted:false,
+      isDeleted:false
     };
 
     taskList.push(task_obj);
@@ -98,6 +99,26 @@ const toggleImportant=(id) =>{
     localStorage.setItem("tasks", JSON.stringify(taskList));
     renderTaskList();
   };
+
+
+  // trash restored function 
+  const restoreTask = (id) =>{
+    taskList = taskList.map(task =>{
+      if(task.id === id){
+        return{...task, isDeleted: false};
+      }
+      return task;
+    });
+    localStorage.setItem("tasks", JSON.stringify(taskList));
+    renderTaskList();
+  };
+    const deleteForever = (id) =>{
+      taskList = taskList.filter(task => task.id !==id);
+
+      localStorage.setItem("tasks", JSON.stringify(taskList));
+      renderTaskList();
+    };
+
 
 
   // edit task function to be called on click
@@ -152,37 +173,54 @@ const renderTaskList=()=>{
       case "today":
         console.log("set filter for input")
         filteredTask = taskList.filter(task =>
+          !task.isDeleted && 
           new Date(task.taskTime).toDateString() === new Date().toDateString()
         );
         break;
+
         case "upcoming":
-         console.log("set filter for upcoming")
-          filteredTask = taskList.filter(task =>
+          filteredTask = taskList.filter(task => 
+            !task.isDeleted &&
             new Date (task.taskTime) > new Date()
           );
-          break;
-          case "important":
-         console.log("set filter for important")
-            filteredTask = taskList.filter(task =>
-              task.isImportant === true
-            );
-            break;
-            case "completed":
-              filteredTask = taskList.filter(task =>
-                task.isCompleted === true
-              );
-              console.log("set filter for completed task")
-            break;
+        break;
 
-            default:
+        case "important":
+         console.log("set filter for important")
+            filteredTask = taskList.filter(task => !task.isDeleted && task.isImportant === true
+            );
+        break;
+
+        case "completed":
+              filteredTask = taskList.filter(task => !task.isDeleted && task.isCompleted === true
+              ); 
+              console.log("set filter for completed task")
+        break;
+        
+        case "trash" :
+          filteredTask =taskList.filter(task =>task.isDeleted);
+          break;
+
+         default:
               filteredTask =taskList; 
       }
       
-      if (filteredTask.length === 0){
-        task_list.innerHTML = "<p>📭 No tasks for today. Add something to stay productive!</p>" ;
-        console.log("no task yet")
-        return;
-      }      
+      // if (filteredTask.length === 0){
+      //   task_list.innerHTML = "<p>📭 No tasks for today. Add something to stay productive!</p>" ;
+      //   console.log("no task yet")
+      //   return;
+      // }      
+
+         // display page name dynamically
+    const filterName= currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
+    const count = filteredTask.length;
+    
+    page_title.innerText=`Task Manager - ${filterName} (${count})`;
+
+    if (count === 0){
+      task_list.innerHTML=`<p>No ${filterName}</p>`;
+      return;
+    }
       
     //  use for each for render every task
     filteredTask.forEach((task) =>{
@@ -208,20 +246,24 @@ const renderTaskList=()=>{
       task_list.appendChild(list_create);
     });
 
-       // display page name dynamically
-    const filterName= currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
-    const count = filteredTask.length;
-    page_title.innerText=`Task Manager - ${filterName} (${count})`;
 
-    if (count === 0){
-      page_title.innerText=`Task Manager - ${filterName} (0)`;
-    }
-
-      page_title.classList.remove("animate__anmiated", "animate__fadeInDown")
+      page_title.classList.remove("animate__animated", "animate__fadeInDown")
         //triger animation again and again
         void page_title.offsetWidth;
         page_title.classList.add("animate__animated", "animate__fadeInDown")
 
+            // trash filter function for delete 
+      if (currentFilter === "trash"){
+        list_create.innerHTML =`
+        <div class="list_row">
+        <span>${task.taskName}</span>
+        <span>${task.taskTime}</span>
+
+        <button onclick="restoreTask(${task.id})">Restored</button>
+        <button onclick="deleteForever(${task.id})">Delete</button>
+        </div>
+        `;
+      }
 
       console.log("currentFilter:", currentFilter);
       console.log("taskList:", taskList);
@@ -236,10 +278,17 @@ const renderTaskList=()=>{
 
 
 const delete_task = (id) => {          //id works as parameter
-  taskList = taskList.filter(item => item.id !== id);
-
+  // taskList = taskList.filter(item => item.id !== id); //delete task permenantly
+      taskList= taskList.map(task =>{
+        if(task.id === id){
+          return{
+            ...task,
+            isDeleted:true
+          };
+        }
+        return task;
+      })
   // save after delete
   localStorage.setItem("tasks", JSON.stringify(taskList));
   renderTaskList();         //update list after remove items
 };
-// renderTaskList();
