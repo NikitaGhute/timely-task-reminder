@@ -132,10 +132,6 @@ const toggleImportant=(id) =>{
 
       editId = id;
     }
-
-
-  // array for tasks list
-  //  taskList.push(task_obj);  // push objects into array, to store multiple fields
      
 
 // create array

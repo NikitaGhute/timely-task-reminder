@@ -1,27 +1,38 @@
 
-
+:root {
+  --primary: #5B5FEF;
+  --primary-light: #EEF0FF;
+  --accent: #22C55E;
+  --danger: #EF4444;
+  --bg-main: #F8FAFC;
+  --bg-sidebar: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --text-dark: #1E293B;
+  --text-light: #64748B;
+  --border: #E2E8F0;
+}
 body {
-  margin: 0;
-  font-family: Arial;
-  background: linear-gradient(to right, #4e54c8, #8f94fb);
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+  font-family: 'Inter', sans-serif;
+}
+body.dark {
+  --bg-main: #0f172a;
+  --bg-card: #1e293b;
+  --text-dark: #f1f5f9;
+  --border: #334155;
 }
 
 .container {
   display: flex;
-  height: 100vh;
-  background: #f5f6fa;
   margin: 20px;
-  border-radius: 10px;
+  border-radius: 18px;
   overflow: hidden;
+  background: white;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
 }
-
-/* Sidebar */
-.sidebar {
-  width: 200px;
-  background: #eee;
-  padding: 20px;
+.sidebar h1{
+  padding-left: 20px;
 }
-
 .sidebar ul {
   list-style: none;
   padding: 0;
@@ -29,16 +40,29 @@ body {
   margin-right: auto;
 } 
 .sidebar li {
-  display: flex;
+   display: flex;
   align-items: center;
-  gap: 12px;              /* space between icon & text */
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position:relative;
-  margin-top: 3px;
-  margin-bottom: auto;
+  gap: 12px;
+  position: relative;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+} 
+.sidebar li::before{
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 0;
+  background: var(--primary);
+  border-radius: 10px;
+  transition: 0.3s;
+}
+.sidebar li.active::before{
+  height: 60%;
 }
 .sidebar li i {
   width: 24px;          
@@ -49,10 +73,12 @@ body {
   flex: 1;                
 }
 .sidebar li:hover{
-  background-color: #f5f6fa;
+   background: var(--primary-light);
+  color: var(--primary);
+  /* background-color: #f5f6fa;
   color:#fff;
   transform: translateX(1px);
-  /* padding: 2px; */
+  padding: 2px; */
 }
 .sidebar li::after {
   content: "";
@@ -61,12 +87,6 @@ body {
   bottom: 0;
   width: 0%;
   height: 3px;
-
-  background: linear-gradient(
-    90deg,
-    red,orange, yellow, green,blue,indigo,violet
-  );
-    transition: width 0.4s ease;
 }
 
 /* hover effect */
@@ -74,11 +94,10 @@ body {
   width: 100%;
 }
 .sidebar li.active {
-  background: #5a64bd;
-  color: rgb(19, 10, 10);
-  padding: 8px;
-  transform: translateX(3px);
-  border-radius: 5px;
+   background: var(--primary);
+  color: white;
+}
+.sidebar li.active {
   color:#fff;
 }
 .sidebar li:hover:not(.active){
@@ -92,6 +111,13 @@ body {
     width: 100%;
  }
 
+ .tag {
+  background: #eef2ff;
+  color: #4f46e5;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
 /* Main */
 .main {
   flex: 1;
@@ -103,6 +129,35 @@ body {
   margin-bottom: 20px;
   margin-top: auto;
   width: 100%;
+}
+#add-task #taskText {
+  flex: 0 0 55%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+#add-task input{
+  margin-right:7px;
+  margin-left: auto;
+}
+
+#add-task #taskTime{
+   flex: 0 0 25%;
+   padding: 10px;
+   box-sizing: border-box;
+}
+#add-task button {
+  padding: 10px;
+  flex:0 0 15%;
+  background: #7379ec;
+  /* border-radius: 6px; */
+  transition: 0.3s;
+  /* color: white; */
+  border: none;
+  font-size: 17px;
+}
+
+#add-task button:hover {
+  background: #3b40a0;
 }
 #display_taskList {
   padding: 0;
@@ -173,35 +228,6 @@ button:hover i {
 .list_row:hover {
   background: #e9edff;
   /* color:#000; */
-}
-#add-task #taskText {
-  flex: 0 0 50%;
-  padding: 10px;
-  box-sizing: border-box;
-}
-#add-task input{
-  margin-right:7px;
-  margin-left: auto;
-}
-
-#add-task #taskTime{
-   flex: 0 0 25%;
-   padding: 10px;
-   box-sizing: border-box;
-}
-#add-task button {
-  padding: 10px;
-  flex:0 0 20%;
-  background: #7379ec;
-  /* border-radius: 6px; */
-  transition: 0.3s;
-  /* color: white; */
-  border: none;
-  font-size: 17px;
-}
-
-#add-task button:hover {
-  background: #3b40a0;
 }
 .task {
   background: white;
