@@ -40,6 +40,11 @@
     <span>Trash</span>
     </li>
 
+    <!-- search task input -->
+     <li onclick="handleSearch('search',this.value)">
+      <i class="fa-solid fa-magnifying-glass"></i>
+        <span>Search here</span>
+      </li>
     </ul>
   </div>
 
@@ -58,8 +63,12 @@
        <ul id="display_taskList">
         <!-- new task list will be add here -->
       </ul>
+   </div>
 
-  </div>
+   <!-- search input -->
+    <div id="searchBox" style="display:none;">
+      <input type="text" placeholder="Search task here..." oninput="handleSearch(this.value)"/>
+    </div>
 
   <!-- Schedule -->
   <div class="schedule">

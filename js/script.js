@@ -55,7 +55,8 @@ const addTask = () => {
       taskTime: task_time,
       isImportant:false,
       isCompleted:false,
-      isDeleted:false
+      isDeleted:false,
+      isSearch:false,
     };
 
     taskList.push(task_obj);
@@ -151,6 +152,15 @@ const setFilter = (type, element)=>{
       li.classList.remove("active");
     });
     element.classList.add("active");
+    searchText = "";
+
+    // if else for search option
+   if (type === "search"){
+      searchBox.style.display="block";
+   }
+   else{
+      searchBox.style.display="none";
+   }
 
     renderTaskList();
 }
@@ -197,16 +207,19 @@ const renderTaskList=()=>{
           filteredTask =taskList.filter(task =>task.isDeleted);
           break;
 
+          case "search" :
+            filteredTask = taskList.filter(task => !task.isSearch);
+            break;
+            
          default:
               filteredTask =taskList; 
       }
-      
-      // if (filteredTask.length === 0){
-      //   task_list.innerHTML = "<p>📭 No tasks for today. Add something to stay productive!</p>" ;
-      //   console.log("no task yet")
-      //   return;
-      // }      
-
+        if (searchText){
+        filteredTask = filteredTask.filter(task =>
+          task.taskName.toLowerCase().includes(searchText)
+        );
+      }
+  
          // display page name dynamically
     const filterName= currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
     const count = filteredTask.length;
@@ -217,7 +230,14 @@ const renderTaskList=()=>{
       task_list.innerHTML=`<p>No ${filterName}</p>`;
       return;
     }
+
+    if(filteredTask.length === 0){
+      task_list.innerHTML=`<p>No matching tasks found</p>`
+      return;
+    }
       
+
+
     //  use for each for render every task
     filteredTask.forEach((task) =>{
       const list_create= document.createElement("li");
@@ -261,9 +281,31 @@ const renderTaskList=()=>{
         `;
       }
 
+      if(currentFilter === "trash"){
+        list.create.innerHTML = `
+          <div class="list_row">
+            <span>${task.taskName}</span>
+            <span>${task.taskTime}</span>
+
+            <button onclick="restoredTask(${task.id})"> Restored </button>
+            <button onclick="deleteForever(${task.id})"> Delete Permenently</button>
+          </div>
+        `;
+      }
+
       console.log("currentFilter:", currentFilter);
       console.log("taskList:", taskList);
        console.log("filteredTasks:", filteredTask);
+};
+
+// search task function here
+let searchText= " ";
+
+const handleSearch = (value)=>{
+    searchText=value.toLowerCase().trim();
+    console.log("searched task is: ",searchText);
+    renderTaskList();
+
 };
 
 
