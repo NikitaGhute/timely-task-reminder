@@ -4,6 +4,8 @@ const addedTask = document.getElementById("taskText");
 const addedTime=  document.getElementById("taskTime");
 const task_list=  document.getElementById("display_taskList");
 const page_title =document.getElementById("pageTitle");
+const search_container= document.getElementById("search-container");
+const addTasksection = document.getElementById("add-task");
 
 const addTask = () => {
   const task_name = addedTask.value.trim();
@@ -56,7 +58,7 @@ const addTask = () => {
       isImportant:false,
       isCompleted:false,
       isDeleted:false,
-      isSearch:false,
+  
     };
 
     taskList.push(task_obj);
@@ -69,6 +71,23 @@ const addTask = () => {
   addedTask.value = "";  //reset value of task name field
   addedTime.value = "";  //reset value of task time field
 };
+
+
+// search state 
+let searchText="";
+
+// handle search input and store search text and re-render ui/task list
+const handleSearch = (value)=>{
+  searchText=value.toLowerCase().trim();
+  renderTaskList();
+};
+
+// apply search filter for all task
+if(searchText){
+  filteredTask = filteredTask.filter(task =>
+    task.taskName.toLowerCase().includes(searchText)
+  );
+}
 
 // toggle button for important task
 const toggleImportant=(id) =>{
@@ -100,7 +119,6 @@ const toggleImportant=(id) =>{
     localStorage.setItem("tasks", JSON.stringify(taskList));
     renderTaskList();
   };
-
 
   // trash restored function 
   const restoreTask = (id) =>{
@@ -148,20 +166,23 @@ const setFilter = (type, element)=>{
 
     //toggle between active and in active style
     // class="animate_animated animate_zoomIn" 
-    document.querySelectorAll(".sidebar li").forEach(li =>{
-      li.classList.remove("active");
-    });
+    document.querySelectorAll(".sidebar li").forEach(li =>
+      li.classList.remove("active")
+    );
     element.classList.add("active");
-    searchText = "";
 
-    // if else for search option
-   if (type === "search"){
-      searchBox.style.display="block";
-   }
-   else{
-      searchBox.style.display="none";
-   }
+    if(type === "search"){
+      addTasksection.style.display = "none";
+      search_container.style.display="inline-block";
 
+      document.getElementById("searchBox").focus();
+    }
+    else {
+      addTasksection.style.display = "block";
+      search_container.style.display = "none";
+
+      searchText = "";
+    }
     renderTaskList();
 }
 
@@ -184,17 +205,17 @@ const renderTaskList=()=>{
         );
         break;
 
+           case "important":
+         console.log("set filter for important")
+            filteredTask = taskList.filter(task => !task.isDeleted && task.isImportant === true
+            );
+        break;
+
         case "upcoming":
           filteredTask = taskList.filter(task => 
             !task.isDeleted &&
             new Date (task.taskTime) > new Date()
           );
-        break;
-
-        case "important":
-         console.log("set filter for important")
-            filteredTask = taskList.filter(task => !task.isDeleted && task.isImportant === true
-            );
         break;
 
         case "completed":
@@ -206,18 +227,9 @@ const renderTaskList=()=>{
         case "trash" :
           filteredTask =taskList.filter(task =>task.isDeleted);
           break;
-
-          case "search" :
-            filteredTask = taskList.filter(task => !task.isSearch);
-            break;
             
          default:
-              filteredTask =taskList; 
-      }
-        if (searchText){
-        filteredTask = filteredTask.filter(task =>
-          task.taskName.toLowerCase().includes(searchText)
-        );
+              filteredTask = taskList.filter(task => !task.isDeleted); 
       }
   
          // display page name dynamically
@@ -231,81 +243,63 @@ const renderTaskList=()=>{
       return;
     }
 
-    if(filteredTask.length === 0){
-      task_list.innerHTML=`<p>No matching tasks found</p>`
-      return;
-    }
-      
-
 
     //  use for each for render every task
-    filteredTask.forEach((task) =>{
-      const list_create= document.createElement("li");
+    filteredTask.forEach((task) => {
+  const list_create = document.createElement("li");
 
-      list_create.innerHTML=`
-        <div class="list_row">
-          <span>${task.taskName}</span>
-          <span>${task.taskTime}</span>
-          <button onclick="toggleImportant(${task.id})">
-            ${task.isImportant ? '<i class="fa-solid fa-star important"></i>' : '<i class="fa-regular fa-star"></i>'
-            }
-            </button>
-            <button onclick="toggleCompleted(${task.id})">
-              ${task.isCompleted 
-                ? '<i class="fa-solid fa-circle-check completed-icon"></i>' 
-                : '<i class="fa-regular fa-circle"></i>'}
-            </button>
-            <button class="edit_task" onclick="edit_task(${task.id})"><i class="fa-regular fa-pen-to-square"></i></button>
-          <button class="delete_task" onClick="delete_task(${task.id})"><i class="fa-regular fa-trash-can"></i></button>
-        </div>
-      `
-      task_list.appendChild(list_create);
-    });
+  if (currentFilter === "trash") {
+    list_create.innerHTML = `
+      <div class="list_row">
+        <span>${task.taskName}</span>
+        <span>${task.taskTime}</span>
 
+        <button onclick="restoreTask(${task.id})">Restore</button>
+        <button onclick="deleteForever(${task.id})">Delete Permanently</button>
+      </div>
+    `;
+  } 
+  else {
+    list_create.innerHTML = `
+      <div class="list_row">
+        <span>${task.taskName}</span>
+        <span>${task.taskTime}</span>
+
+        <button onclick="toggleImportant(${task.id})">
+          ${task.isImportant 
+            ? '<i class="fa-solid fa-star important"></i>' 
+            : '<i class="fa-regular fa-star"></i>'}
+        </button>
+
+        <button onclick="toggleCompleted(${task.id})">
+          ${task.isCompleted 
+            ? '<i class="fa-solid fa-circle-check completed-icon"></i>' 
+            : '<i class="fa-regular fa-circle"></i>'}
+        </button>
+
+        <button onclick="edit_task(${task.id})">
+          <i class="fa-regular fa-pen-to-square"></i>
+        </button>
+
+        <button onclick="delete_task(${task.id})">
+          <i class="fa-regular fa-trash-can"></i>
+        </button>
+      </div>
+    `;
+  }
+
+  task_list.appendChild(list_create);
+});
+          
 
       page_title.classList.remove("animate__animated", "animate__fadeInDown")
         //triger animation again and again
         void page_title.offsetWidth;
         page_title.classList.add("animate__animated", "animate__fadeInDown")
 
-            // trash filter function for delete 
-      if (currentFilter === "trash"){
-        list_create.innerHTML =`
-        <div class="list_row">
-        <span>${task.taskName}</span>
-        <span>${task.taskTime}</span>
-
-        <button onclick="restoreTask(${task.id})">Restored</button>
-        <button onclick="deleteForever(${task.id})">Delete</button>
-        </div>
-        `;
-      }
-
-      if(currentFilter === "trash"){
-        list.create.innerHTML = `
-          <div class="list_row">
-            <span>${task.taskName}</span>
-            <span>${task.taskTime}</span>
-
-            <button onclick="restoredTask(${task.id})"> Restored </button>
-            <button onclick="deleteForever(${task.id})"> Delete Permenently</button>
-          </div>
-        `;
-      }
-
       console.log("currentFilter:", currentFilter);
       console.log("taskList:", taskList);
        console.log("filteredTasks:", filteredTask);
-};
-
-// search task function here
-let searchText= " ";
-
-const handleSearch = (value)=>{
-    searchText=value.toLowerCase().trim();
-    console.log("searched task is: ",searchText);
-    renderTaskList();
-
 };
 
 

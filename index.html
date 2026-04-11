@@ -25,6 +25,11 @@
     <span>Today</span>
   </li>
 
+  <li onclick="setFilter('upcoming', this)">
+    <i class="fa-solid fa-calendar-day"></i>
+    <span>Upcoming</span>
+  </li>
+
   <li onclick="setFilter('important', this)">
     <i class="fa-solid fa-star"></i>
     <span>Important</span>
@@ -41,7 +46,7 @@
     </li>
 
     <!-- search task input -->
-     <li onclick="handleSearch('search',this.value)">
+     <li onclick="setFilter('search', this)">
       <i class="fa-solid fa-magnifying-glass"></i>
         <span>Search here</span>
       </li>
@@ -60,15 +65,20 @@
       <button onClick="addTask()">Add Task</button>
     </div>
     
+      <!-- search input -->
+    <div id="search-container" style="display:none;">
+      <input id="searchBox" type="text" placeholder="Search task here..." oninput="handleSearch('search',this.value)"/>  
+      <button onclick="" id="search-btn" >Search</button> 
+       <!-- oninput- runs every time when user types -->
+    </div>
+
+
        <ul id="display_taskList">
         <!-- new task list will be add here -->
       </ul>
+      upcoming and today or any other filter about future task
    </div>
 
-   <!-- search input -->
-    <div id="searchBox" style="display:none;">
-      <input type="text" placeholder="Search task here..." oninput="handleSearch(this.value)"/>
-    </div>
 
   <!-- Schedule -->
   <div class="schedule">

@@ -130,6 +130,32 @@ body.dark {
   margin-top: auto;
   width: 100%;
 }
+ #search-container{
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: auto;
+  margin-left: 12px;
+  margin-right: auto;
+ }
+
+#search-container input {
+  width: 60%;
+  padding: 10px;
+  border-radius: 6px;
+}
+#search-container button{
+   padding: 10px 15px;
+  flex:0 0 15%;
+  background: #7379ec;
+  /* border-radius: 6px; */
+  transition: 0.3s;
+  border: none;
+  color:#fff;
+
+  border-radius: 4px;
+  font-size: 17px;
+}
 #add-task #taskText {
   flex: 0 0 55%;
   padding: 10px;
@@ -173,6 +199,9 @@ body.dark {
   list-style: none;
   margin-bottom: 12px;
   margin-top:auto;
+}
+#display_task li:hover{
+  cursor: pointer;
 }
 
 #display_taskList p {
