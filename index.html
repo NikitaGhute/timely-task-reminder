@@ -67,7 +67,7 @@
     
       <!-- search input -->
     <div id="search-container" style="display:none;">
-      <input id="searchBox" type="text" placeholder="Search task here..." oninput="handleSearch('search',this.value)"/>  
+      <input id="searchBox" type="text" placeholder="Search task here..." oninput="handleSearch(this.value)"/>  
       <button onclick="" id="search-btn" >Search</button> 
        <!-- oninput- runs every time when user types -->
     </div>
@@ -76,8 +76,7 @@
        <ul id="display_taskList">
         <!-- new task list will be add here -->
       </ul>
-      upcoming and today or any other filter about future task
-   </div>
+      </div>
 
 
   <!-- Schedule -->

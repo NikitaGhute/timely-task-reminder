@@ -4,8 +4,10 @@ const addedTask = document.getElementById("taskText");
 const addedTime=  document.getElementById("taskTime");
 const task_list=  document.getElementById("display_taskList");
 const page_title =document.getElementById("pageTitle");
-const search_container= document.getElementById("search-container");
+const search_container= document.getElementById("search-container")
+const search_Box= document.getElementById("searchBox");
 const addTasksection = document.getElementById("add-task");
+
 
 const addTask = () => {
   const task_name = addedTask.value.trim();
@@ -78,7 +80,7 @@ let searchText="";
 
 // handle search input and store search text and re-render ui/task list
 const handleSearch = (value)=>{
-  searchText=value.toLowerCase().trim();
+  searchText= value.toLowerCase().trim();
   renderTaskList();
 };
 
@@ -164,8 +166,6 @@ const setFilter = (type, element)=>{
   console.log("clicked on filter", type)
     currentFilter=type;     //type, this value come from html, 
 
-    //toggle between active and in active style
-    // class="animate_animated animate_zoomIn" 
     document.querySelectorAll(".sidebar li").forEach(li =>
       li.classList.remove("active")
     );
@@ -174,8 +174,9 @@ const setFilter = (type, element)=>{
     if(type === "search"){
       addTasksection.style.display = "none";
       search_container.style.display="inline-block";
+      // renderTaskList = "";
 
-      document.getElementById("searchBox").focus();
+      // document.getElementById("searchBox").focus();
     }
     else {
       addTasksection.style.display = "block";
@@ -196,51 +197,55 @@ const renderTaskList=()=>{
     //create filter task
     let filteredTask= [];
 
-    switch (currentFilter){
-      case "today":
-        console.log("set filter for input")
-        filteredTask = taskList.filter(task =>
-          !task.isDeleted && 
-          new Date(task.taskTime).toDateString() === new Date().toDateString()
-        );
-        break;
+   switch (currentFilter) {
+  case "today":
+    filteredTask = taskList.filter(task =>
+      !task.isDeleted &&
+      new Date(task.taskTime).toDateString() === new Date().toDateString()
+    );
+    break;
 
-           case "important":
-         console.log("set filter for important")
-            filteredTask = taskList.filter(task => !task.isDeleted && task.isImportant === true
-            );
-        break;
+  case "important":
+    filteredTask = taskList.filter(task =>
+      !task.isDeleted && task.isImportant
+    );
+    break;
 
-        case "upcoming":
-          filteredTask = taskList.filter(task => 
-            !task.isDeleted &&
-            new Date (task.taskTime) > new Date()
-          );
-        break;
+  case "completed":
+    filteredTask = taskList.filter(task =>
+      !task.isDeleted && task.isCompleted
+    );
+    break;
 
-        case "completed":
-              filteredTask = taskList.filter(task => !task.isDeleted && task.isCompleted === true
-              ); 
-              console.log("set filter for completed task")
-        break;
-        
-        case "trash" :
-          filteredTask =taskList.filter(task =>task.isDeleted);
-          break;
-            
-         default:
-              filteredTask = taskList.filter(task => !task.isDeleted); 
-      }
-  
+  case "trash":
+    filteredTask = taskList.filter(task => task.isDeleted);
+    break;
+
+  case "search":
+    filteredTask = taskList.filter(task => !task.isDeleted);
+    break;
+
+  default:
+    filteredTask = taskList.filter(task => !task.isDeleted);
+ }
+
+ if (currentFilter === "search" && searchText){
+  filteredTask = filteredTask.filter(task =>
+    task.taskName.toLowerCase().includes(searchText)
+  )
+ }
+
          // display page name dynamically
     const filterName= currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
     const count = filteredTask.length;
     
     page_title.innerText=`Task Manager - ${filterName} (${count})`;
 
-    if (count === 0){
-      task_list.innerHTML=`<p>No ${filterName}</p>`;
-      return;
+    if(filteredTask.length === 0){
+      task_list.innerHTML = currentFilter === "search"
+        ? `<p>No matching tasks found</p>`
+        : `<p> No ${filterName}</p>`;
+         return;
     }
 
 

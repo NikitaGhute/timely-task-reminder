@@ -129,61 +129,63 @@ body.dark {
   margin-bottom: 20px;
   margin-top: auto;
   width: 100%;
-}
- #search-container{
-  display: flex;
-  width: 100%;
-  margin-bottom: 20px;
-  margin-top: auto;
-  margin-left: 12px;
-  margin-right: auto;
- }
-
-#search-container input {
-  width: 60%;
-  padding: 10px;
-  border-radius: 6px;
-}
-#search-container button{
-   padding: 10px 15px;
-  flex:0 0 15%;
-  background: #7379ec;
-  /* border-radius: 6px; */
-  transition: 0.3s;
-  border: none;
-  color:#fff;
-
-  border-radius: 4px;
-  font-size: 17px;
-}
-#add-task #taskText {
-  flex: 0 0 55%;
-  padding: 10px;
-  box-sizing: border-box;
+  margin-left: 16px;
 }
 #add-task input{
   margin-right:7px;
   margin-left: auto;
+  border-radius: 4px;
 }
-
+#add-task #taskText {
+  width:55%;
+  padding: 10px;
+  box-sizing: border-box;
+}
 #add-task #taskTime{
-   flex: 0 0 25%;
+   width:25%;
    padding: 10px;
    box-sizing: border-box;
 }
 #add-task button {
   padding: 10px;
-  flex:0 0 15%;
+  width:15%;
   background: #7379ec;
-  /* border-radius: 6px; */
   transition: 0.3s;
-  /* color: white; */
+  color:#fff;
   border: none;
   font-size: 17px;
 }
 
 #add-task button:hover {
   background: #3b40a0;
+}
+
+/* search task style */
+#search-container{
+  display: flex;
+  margin-bottom: 7px;
+  margin-top: auto;
+  width: 100%;
+  margin-right:7px;
+  margin-left: auto;
+}
+#search-container input {
+  width:70%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-left:15px;
+  margin-right: auto;
+  border-radius: 4px;
+}
+#search-container button {
+  padding: 10px;
+  width: 20%;
+  background: #7379ec;
+  /* border-radius: 6px; */
+  transition: 0.3s;
+  color: white;
+  border: none;
+  font-size: 17px;
 }
 #display_taskList {
   padding: 0;
@@ -199,9 +201,6 @@ body.dark {
   list-style: none;
   margin-bottom: 12px;
   margin-top:auto;
-}
-#display_task li:hover{
-  cursor: pointer;
 }
 
 #display_taskList p {
