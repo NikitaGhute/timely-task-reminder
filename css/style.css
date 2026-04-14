@@ -124,41 +124,164 @@ body.dark {
   padding: 20px;
 }
 
+/* 🔷 Container */
+#add-task {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #f7f8ff;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e4e6f0;
+  margin: 16px 0;
+}
+
+/* 🔷 Input groups */
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🎯 Width control (important for UI balance) */
+.input-group:first-child {
+  flex: 2; /* task input wider */
+}
+
+.input-group:nth-child(2) {
+  flex: 1; /* time smaller */
+}
+
+/* 🔷 Inputs */
+.input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #dcdfe6;
+  font-size: 14px;
+  background: #fff;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+/* ✨ Focus effect */
+.input-group input:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.15);
+}
+
+/* 🔴 Error state */
+.input-error {
+  border-color: #ff4d4f !important;
+  background: #fff2f2;
+}
+
+/*          🟢 Success state (optional) */
+.input-success {
+  border-color: #28a745;
+  background: #f3fff5;
+}
+
+/* 🔷 Error message */
+.error-msg {
+  font-size: 12px;
+  color: #ff4d4f;
+  margin-top: 4px;
+  min-height: 14px; /* prevents layout jump */
+}
+
+/* 🔷 Button */
+#add-task button {
+  flex: 0.7;
+  height: 44px;
+  margin-top: 2px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #6c63ff, #5a54e6);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* ✨ Button hover */
+#add-task button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(108, 99, 255, 0.3);
+}
+
+/* 🔷 Placeholder styling */
+.input-group input::placeholder {
+  color: #a0a3bd;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  #add-task {
+    flex-direction: column;
+  }
+
+  #add-task button {
+    width: 100%;
+  }
+}
+
+/* 
 #add-task {
   display: flex;
   margin-bottom: 20px;
   margin-top: auto;
-  width: 100%;
-  margin-left: 16px;
+  gap: 10px;
+  align-items: flex-start;
 }
 #add-task input{
-  margin-right:7px;
-  margin-left: auto;
+  margin-left:16px;
+  margin-right: auto;
   border-radius: 4px;
 }
-#add-task #taskText {
-  width:55%;
+/* keep inputs normal */
+.input-group input {
+  /* width: 100%; */
   padding: 10px;
+}
+#add-task #taskText {
+  flex: 0 0 3 !important;   /*equal width*/
+  padding: 10px;
+  font-size: 14px;
   box-sizing: border-box;
 }
 #add-task #taskTime{
-   width:25%;
+   flex: 0 0 1 !important;
    padding: 10px;
    box-sizing: border-box;
 }
 #add-task button {
   padding: 10px;
-  width:15%;
   background: #7379ec;
   transition: 0.3s;
   color:#fff;
   border: none;
+  flex: 0 0 auto !important;
   font-size: 17px;
+}
+
+/* wrapper for input + error */
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* error */
+.error-msg {
+  font-size: 12px;
+  color: red;
+  min-height: 14px; /* prevents jump */
 }
 
 #add-task button:hover {
   background: #3b40a0;
-}
+} */
 
 /* search task style */
 #search-container{

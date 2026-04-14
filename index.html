@@ -60,9 +60,16 @@
 
     <!-- Add Task -->
     <div id="add-task">
-      <input type="text" id="taskText" placeholder="Add new task...">
-      <input type="datetime-local" id="taskTime" required />
-      <button onClick="addTask()">Add Task</button>
+      <div class="input-group">
+       <input type="text" id="taskText" placeholder="Add new task...">
+       <small class="error-msg" id="taskError"></small>
+      </div>
+      
+      <div class="input-group">
+        <input type="datetime-local" id="taskTime" required />
+        <small class="error-msg" id="timeError"></small>
+      </div>
+        <button onClick="addTask()">Add Task</button>
     </div>
     
       <!-- search input -->

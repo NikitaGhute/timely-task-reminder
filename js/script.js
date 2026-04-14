@@ -14,17 +14,25 @@ const addTask = () => {
   const task_time = addedTime.value.trim();
 
   if (task_name === "" && task_time === "") {
-    alert("please enter task and time");
-    return;
-  }
+    // alert("please enter task and time");
+ document.getElementById("taskError").innerText ="Task is required"
+    addedTask.classList.add("input-error");
+  isValid = false;
+} else {
+  addedTask.classList.add("input-success");
+}
+// return;
 
   if (task_time === "") {
-    alert("please enter task time");
-    return;
+    addedTask.classList.add("input-error");
+   isValid = false;
+  }
+  else{
+    addedTime.classList.add("input-sucess");
   }
 
    if (!/[a-zA-Z]/.test(task_name)) {
-    alert("Task must contain at least one letter");
+    addedTask.classList.add("input-error");
     return;
   }
 
@@ -32,8 +40,8 @@ const addTask = () => {
   const selectedTime = new Date(task_time);
 
   if (selectedTime < now) {
-    alert("please select future time");
-    return;
+    // alert("please select future time");
+    // return;
   }
 
   if (editId) {
@@ -74,6 +82,12 @@ const addTask = () => {
   addedTime.value = "";  //reset value of task time field
 };
 
+addedTask.addEventListener("input", () =>{
+  addTask.classList.remove("input-error");
+});
+addedTime.addEventListener("input", () =>{
+  addedTime.classList.remove("input-error");
+});
 
 // search state 
 let searchText="";
