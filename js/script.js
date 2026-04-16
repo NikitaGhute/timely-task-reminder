@@ -7,42 +7,58 @@ const page_title =document.getElementById("pageTitle");
 const search_container= document.getElementById("search-container")
 const search_Box= document.getElementById("searchBox");
 const addTasksection = document.getElementById("add-task");
-
+const task_Error=document.getElementById("taskError");
+const time_error = document.getElementById("timeError");
 
 const addTask = () => {
   const task_name = addedTask.value.trim();
   const task_time = addedTime.value.trim();
 
-  if (task_name === "" && task_time === "") {
+  if (task_name === "") {
     // alert("please enter task and time");
- document.getElementById("taskError").innerText ="Task is required"
+    console.log("task name :", task_name)
     addedTask.classList.add("input-error");
-  isValid = false;
-} else {
-  addedTask.classList.add("input-success");
-}
-// return;
-
-  if (task_time === "") {
+    addedTask.classList.remove("input-success");
+    task_Error.innerText ="Task is required";
+    return;
+  // isValid = false;
+} 
+  else if (!/[a-zA-Z]/.test(task_name)) {
     addedTask.classList.add("input-error");
-   isValid = false;
-  }
-  else{
-    addedTime.classList.add("input-sucess");
-  }
-
-   if (!/[a-zA-Z]/.test(task_name)) {
-    addedTask.classList.add("input-error");
+    task_Error.innerHTML = "Enter valid Task";
     return;
   }
+else{
+    addedTask.classList.remove("input-error");
+    addedTask.classList.add("input-success");
+    task_Error.innerText = "";
+  }
+  // return;
 
   const now = new Date();
   const selectedTime = new Date(task_time);
 
-  if (selectedTime < now) {
-    // alert("please select future time");
-    // return;
+  if (task_time === "") {
+    time_error.innerHTML = "Date is required";
+    addedTime.classList.add("input-error");
+  //  isValid = false;
+   return;
   }
+  
+  else if (selectedTime < now) {
+    // alert("please select future time");
+    time_error.innerHTML = "Please enter future date and time";
+    addedTime.classList.add("input-error");
+    return;
+  }
+  else{
+    addedTime.classList.remove("input-error");
+    addedTime.classList.add("input-success");
+    time_error.innerText = "";
+  }
+
+  
+
 
   if (editId) {
     // edit task
@@ -82,12 +98,13 @@ const addTask = () => {
   addedTime.value = "";  //reset value of task time field
 };
 
-addedTask.addEventListener("input", () =>{
-  addTask.classList.remove("input-error");
-});
-addedTime.addEventListener("input", () =>{
-  addedTime.classList.remove("input-error");
-});
+    addedTask.addEventListener("input", () =>{
+
+      addedTask.classList.remove("input-error");
+    });
+    addedTime.addEventListener("input", () =>{
+      addedTime.classList.remove("input-error");
+    });
 
 // search state 
 let searchText="";
