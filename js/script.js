@@ -21,10 +21,10 @@ const addTask = () => {
     addedTask.classList.remove("input-success");
     task_Error.innerText ="Task is required";
     return;
-  // isValid = false;
 } 
   else if (!/[a-zA-Z]/.test(task_name)) {
     addedTask.classList.add("input-error");
+    addedTask.classList.remove("input-success");
     task_Error.innerHTML = "Enter valid Task";
     return;
   }
@@ -99,7 +99,6 @@ else{
 };
 
     addedTask.addEventListener("input", () =>{
-
       addedTask.classList.remove("input-error");
     });
     addedTime.addEventListener("input", () =>{
@@ -116,11 +115,11 @@ const handleSearch = (value)=>{
 };
 
 // apply search filter for all task
-if(searchText){
-  filteredTask = filteredTask.filter(task =>
-    task.taskName.toLowerCase().includes(searchText)
-  );
-}
+// if(searchText){
+//   filteredTask = filteredTask.filter(task =>
+//     task.taskName.toLowerCase().includes(searchText)
+//   );
+// }
 
 // toggle button for important task
 const toggleImportant=(id) =>{
