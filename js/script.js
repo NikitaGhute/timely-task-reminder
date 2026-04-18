@@ -203,13 +203,13 @@ const setFilter = (type, element)=>{
 
     if(type === "search"){
       addTasksection.style.display = "none";
-      search_container.style.display="inline-block";
+      search_container.style.display="flex";
       // renderTaskList = "";
 
       // document.getElementById("searchBox").focus();
     }
     else {
-      addTasksection.style.display = "block";
+      addTasksection.style.display = "flex";
       search_container.style.display = "none";
 
       searchText = "";
@@ -223,7 +223,6 @@ const renderTaskList=()=>{
   console.log("render called");
       task_list.innerHTML= "";      //ui list will be empty before enter task
       
-
     //create filter task
     let filteredTask= [];
 
@@ -300,23 +299,27 @@ const renderTaskList=()=>{
         <span>${task.taskName}</span>
         <span>${task.taskTime}</span>
 
-        <button onclick="toggleImportant(${task.id})">
+        <button class="tooltip-btn" onclick="toggleImportant(${task.id})">
+        <span class="tooltip-text">Important Task</span>
           ${task.isImportant 
             ? '<i class="fa-solid fa-star important"></i>' 
             : '<i class="fa-regular fa-star"></i>'}
         </button>
 
-        <button onclick="toggleCompleted(${task.id})">
+        <button class="tooltip-btn" onclick="toggleCompleted(${task.id})">
+        <span class="tooltip-text">Complete task</span>
           ${task.isCompleted 
             ? '<i class="fa-solid fa-circle-check completed-icon"></i>' 
             : '<i class="fa-regular fa-circle"></i>'}
         </button>
 
-        <button onclick="edit_task(${task.id})">
+        <button class="tooltip-btn" onclick="edit_task(${task.id})">
+        <span class="tooltip-text">Edit Task</span>
           <i class="fa-regular fa-pen-to-square"></i>
         </button>
 
-        <button onclick="delete_task(${task.id})">
+        <button class="tooltip-btn" onclick="delete_task(${task.id})">
+        <span class="tooltip-text">Delete</span>
           <i class="fa-regular fa-trash-can"></i>
         </button>
       </div>
