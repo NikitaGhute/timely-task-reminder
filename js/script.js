@@ -57,9 +57,6 @@ else{
     time_error.innerText = "";
   }
 
-  
-
-
   if (editId) {
     // edit task
     taskList = taskList.map(task => {
@@ -113,13 +110,6 @@ const handleSearch = (value)=>{
   searchText= value.toLowerCase().trim();
   renderTaskList();
 };
-
-// apply search filter for all task
-// if(searchText){
-//   filteredTask = filteredTask.filter(task =>
-//     task.taskName.toLowerCase().includes(searchText)
-//   );
-// }
 
 // toggle button for important task
 const toggleImportant=(id) =>{
@@ -204,9 +194,11 @@ const setFilter = (type, element)=>{
     if(type === "search"){
       addTasksection.style.display = "none";
       search_container.style.display="flex";
-      // renderTaskList = "";
-
-      // document.getElementById("searchBox").focus();
+      return;
+    }
+    if( type === "trash"){
+      addTasksection.style.display="none";
+      search_container.style.display="flex";
     }
     else {
       addTasksection.style.display = "flex";
@@ -273,7 +265,7 @@ const renderTaskList=()=>{
     if(filteredTask.length === 0){
       task_list.innerHTML = currentFilter === "search"
         ? `<p>No matching tasks found</p>`
-        : `<p> No ${filterName}</p>`;
+        : `<p> No ${filterName} tasks yet</p>`;
          return;
     }
 
@@ -295,7 +287,7 @@ const renderTaskList=()=>{
   } 
   else {
     list_create.innerHTML = `
-      <div class="list_row">
+      <div class="list_row ${task.isCompleted ? 'completed-task' : ''}">
         <span>${task.taskName}</span>
         <span>${task.taskTime}</span>
 

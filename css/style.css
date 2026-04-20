@@ -46,7 +46,11 @@ body.dark {
   position: relative;
   padding: 12px;
   margin-bottom: 8px;
-  border-radius: 10px;
+  margin-top: auto;
+  margin-right: 10px;
+  margin-left:auto;
+  cursor: pointer;
+  border-radius: 6px;
   transition: all 0.25s ease;
 } 
 .sidebar li::before{
@@ -354,7 +358,7 @@ button:hover i {
   border-radius: 5px;
 }
 
-.completed {
+.completed{
   text-decoration: line-through;
   color: gray;
 }
@@ -362,6 +366,14 @@ button:hover i {
   opacity: 0.5;
   text-decoration: line-through;
 }
+/* 
+.completed-task {
+  opacity: 0.5;
+}
+
+.completed-task span:first-child {
+  text-decoration: line-through;
+} */
 
 /* tooltip */
 .tooltip-btn{
@@ -420,5 +432,5 @@ button:hover i {
  .main {
     flex: 1;
     padding: -1px 11px;
-}
+ }
 }

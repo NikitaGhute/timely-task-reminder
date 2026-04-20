@@ -15,7 +15,7 @@
   <div class="sidebar">
     <h1>Menu</h1>
     <ul>
-  <li onclick="setFilter('inbox', this)">
+  <li class="active" onclick="setFilter('inbox', this)">
     <i class="fa-regular fa-envelope"></i>
     <span>Inbox</span>
   </li>
@@ -57,7 +57,6 @@
   <div class="main">
 
     <h1 id="pageTitle">Tasks Manager </h1>
-
     <!-- Add Task -->
     <div id="add-task">
       <div class="input-group input-task">
@@ -71,7 +70,13 @@
       </div>
         <button onClick="addTask()">Add Task</button>
     </div>
-    
+
+    <!-- trash task -->
+      <div id="search-container" style="display: none;">
+        <input id="trashSearch" type="text" placeholder="Search trashed task" oninput="handleSearch(this.value)"/>
+        <button onclick="" id="">Search</button>
+      </div>
+
       <!-- search input -->
     <div id="search-container" style="display:none;">
       <input id="searchBox" type="text" placeholder="Search task here..." oninput="handleSearch(this.value)"/>  
@@ -79,6 +84,12 @@
        <!-- oninput- runs every time when user types -->
     </div>
 
+      1.add search option into trash also
+      2.reduce opacity of completed Task
+      3.if add task remains incomplete,and same time select other option, then that task should be remove from input field
+      4. sort task as per time and date
+      5. mark overdue Tasks
+      
 
        <ul id="display_taskList">
         <!-- new task list will be add here -->
