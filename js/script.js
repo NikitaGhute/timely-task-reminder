@@ -160,8 +160,6 @@ const toggleImportant=(id) =>{
       renderTaskList();
     };
 
-
-
   // edit task function to be called on click
     const edit_task = (id)=>{
       
@@ -269,6 +267,14 @@ const renderTaskList=()=>{
          return;
     }
 
+    // sort task with filter of complete and with time and date
+filteredTask.sort((a,b) =>{
+ if( a.isCompleted !== b.isCompleted){
+  return a.isCompleted - b.isCompleted;
+ }
+ return new Date(a.taskTime) - new Date(b.taskTime);
+})
+  
 
     //  use for each for render every task
     filteredTask.forEach((task) => {
