@@ -366,14 +366,19 @@ button:hover i {
   opacity: 0.5;
   text-decoration: line-through;
 }
-/* 
-.completed-task {
-  opacity: 0.5;
+/* .overdue-label{
+  color:white;
+  background:red;
+  font-size: 10px;
+  padding:2px 6px;
+  border-radius:4px;
+  margin-left:8px;
+} */
+.overdue-task{
+  border-left: 4px solid red;
+  background:#fff1f1;
 }
 
-.completed-task span:first-child {
-  text-decoration: line-through;
-} */
 
 /* tooltip */
 .tooltip-btn{

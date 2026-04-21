@@ -89,7 +89,8 @@ else{
 
   //save after update task
   localStorage.setItem("tasks", JSON.stringify(taskList));   //update task into array       
-  renderTaskList();
+  re
+  nderTaskList();
   
   addedTask.value = "";  //reset value of task name field
   addedTime.value = "";  //reset value of task time field
@@ -236,6 +237,14 @@ const renderTaskList=()=>{
     );
     break;
 
+  case "overdue":
+    filteredTask = taskList.filter(task =>
+      !task.isDeleted &&
+      !task.isCompleted &&
+      new Date(task.taskTime) < new Date()
+    );
+    break;
+
   case "trash":
     filteredTask = taskList.filter(task => task.isDeleted);
     break;
@@ -293,7 +302,10 @@ filteredTask.sort((a,b) =>{
   } 
   else {
     list_create.innerHTML = `
-      <div class="list_row ${task.isCompleted ? 'completed-task' : ''}">
+      <div class="list_row 
+      ${task.isCompleted ? 'completed-task' : ''}
+      ${task.isCompleted && new Date(task.taskTime) < new Date() ? "overdue-task" : ''}
+      ">
         <span>${task.taskName}</span>
         <span>${task.taskTime}</span>
 
