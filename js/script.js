@@ -14,6 +14,8 @@ const addTask = () => {
   const task_name = addedTask.value.trim();
   const task_time = addedTime.value.trim();
 
+  let isValid = true;
+
   if (task_name === "") {
     // alert("please enter task and time");
     console.log("task name :", task_name)
@@ -89,8 +91,7 @@ else{
 
   //save after update task
   localStorage.setItem("tasks", JSON.stringify(taskList));   //update task into array       
-  re
-  nderTaskList();
+  renderTaskList();
   
   addedTask.value = "";  //reset value of task name field
   addedTime.value = "";  //reset value of task time field
@@ -98,9 +99,11 @@ else{
 
     addedTask.addEventListener("input", () =>{
       addedTask.classList.remove("input-error");
+      hasUnsavedChanges = addedTask.value.trim() !=="" || addedTime.value !=="";
     });
     addedTime.addEventListener("input", () =>{
       addedTime.classList.remove("input-error");
+      hasUnsavedChanges = addedTask.value.trim() !=="" || addedTime.value !=="";
     });
 
 // search state 
@@ -127,6 +130,7 @@ const toggleImportant=(id) =>{
   renderTaskList();
 };
 
+hasUnsavedChanges = false;
 
 // function for completed task
   const toggleCompleted=(id)=>{
@@ -182,7 +186,17 @@ let currentFilter ="inbox";    //set default value of filter as inbox
 console.log("taskList array", taskList)
 
 const setFilter = (type, element)=>{
-  console.log("clicked on filter", type)
+      if (hasUnsavedChanges){
+      const confirmLeave = confirm("You have unsaved chnages. Discard them?");
+      if(!confirmLeave){
+        return;
+      }
+    }
+
+    hasUnsavedChanges = false;
+    addedTask.value="";
+    addedTime.value="";
+    
     currentFilter=type;     //type, this value come from html, 
 
     document.querySelectorAll(".sidebar li").forEach(li =>
@@ -202,7 +216,6 @@ const setFilter = (type, element)=>{
     else {
       addTasksection.style.display = "flex";
       search_container.style.display = "none";
-
       searchText = "";
     }
     renderTaskList();
@@ -304,7 +317,7 @@ filteredTask.sort((a,b) =>{
     list_create.innerHTML = `
       <div class="list_row 
       ${task.isCompleted ? 'completed-task' : ''}
-      ${task.isCompleted && new Date(task.taskTime) < new Date() ? "overdue-task" : ''}
+      ${!task.isCompleted && new Date(task.taskTime) < new Date() ? "overdue-task" : ''}
       ">
         <span>${task.taskName}</span>
         <span>${task.taskTime}</span>
