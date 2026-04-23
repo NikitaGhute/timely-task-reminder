@@ -366,19 +366,57 @@ button:hover i {
   opacity: 0.5;
   text-decoration: line-through;
 }
-/* .overdue-label{
-  color:white;
-  background:red;
-  font-size: 10px;
-  padding:2px 6px;
-  border-radius:4px;
-  margin-left:8px;
-} */
 .overdue-task{
   border-left: 4px solid red;
   background:#fff1f1;
 }
 
+/* confirm delete style */
+  .confirm-section{
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: #ccc;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index:999;
+  }
+  .confirm-box{
+    background-color: #64748B;
+    padding:20px;
+    border-radius: 10px;
+    width:300px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  .confirm-box p{
+    margin-bottom: 15px;
+    font-size:14px;
+  }
+  .confirm-actions{
+    display: flex;
+    justify-content: space-between;
+    gap:10px;
+  }
+  .confirm-actions button{
+    flex:1;
+    padding: 8px;
+    border:none;
+    border-radius: 6px;
+    cursor: white;
+  }
+
+  #confirm-yes{
+    background-color: #ef4444;
+    color:white;
+  }
+  #confirm-no{
+    background:#e5e7eb;
+  }
+  
 
 /* tooltip */
 .tooltip-btn{
@@ -439,3 +477,4 @@ button:hover i {
     padding: -1px 11px;
  }
 }
+

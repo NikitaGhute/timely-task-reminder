@@ -9,6 +9,11 @@ const search_Box= document.getElementById("searchBox");
 const addTasksection = document.getElementById("add-task");
 const task_Error=document.getElementById("taskError");
 const time_error = document.getElementById("timeError");
+const confirmBox = document.getElementById("custom-confirm");
+const confirmMsg = document.getElementById("confirm-msg");
+const confirmYes = document.getElementById("confirm-yes");
+const confirmNo = document.getElementById("confirm-no");
+
 
 const addTask = () => {
   const task_name = addedTask.value.trim();
@@ -159,10 +164,14 @@ hasUnsavedChanges = false;
     renderTaskList();
   };
     const deleteForever = (id) =>{
-      taskList = taskList.filter(task => task.id !==id);
-
-      localStorage.setItem("tasks", JSON.stringify(taskList));
-      renderTaskList();
+      const task =taskList.find(t => t.id === id);
+      
+      showConfirm(`Delete "${task.taskName}" permanently?`, () =>{
+        taskList =taskList.filter(task =>task.id !== id);
+        taskList = taskList.filter(task => task.id !==id);
+        localStorage.setItem("tasks", JSON.stringify(taskList));
+        renderTaskList();
+      })
     };
 
   // edit task function to be called on click
@@ -187,16 +196,24 @@ console.log("taskList array", taskList)
 
 const setFilter = (type, element)=>{
       if (hasUnsavedChanges){
-      const confirmLeave = confirm("You have unsaved chnages. Discard them?");
-      if(!confirmLeave){
+        showConfirm("You have unsaved changes. Discard them?", ()=>{
+          hasUnsavedChanges = false;
+          addedTask.value = "";
+          addedTime.value = "";
+          currentFilter = type;
+          renderTaskList();
+        })
         return;
-      }
+      // const confirmLeave = confirm("You have unsaved chnages. Discard them?");
+      // if(!confirmLeave){
+      //   return;
+      // }
     }
 
     hasUnsavedChanges = false;
     addedTask.value="";
     addedTime.value="";
-    
+
     currentFilter=type;     //type, this value come from html, 
 
     document.querySelectorAll(".sidebar li").forEach(li =>
@@ -219,7 +236,7 @@ const setFilter = (type, element)=>{
       searchText = "";
     }
     renderTaskList();
-}
+  }
 
 
 // create list item dynamicallly and render as UI
@@ -385,3 +402,32 @@ const delete_task = (id) => {          //id works as parameter
   localStorage.setItem("tasks", JSON.stringify(taskList));
   renderTaskList();         //update list after remove items
 };
+
+
+// delete confirmation
+ const showConfirm = (message, onYes) =>{
+    confirmMsg.innerText = message;
+    confirmBox.style.display = "flex";
+
+    confirmYes.onclick = () =>{
+      confirmBox.style.display = "none";
+      onYes();
+    };
+
+    confirmNo.onclick = () =>{
+      confirmBox.style.display = "none";
+    };
+ };
+
+// unsaved changes
+// if (hasUnsavedChanges) {
+//   showConfirm ("You have unsaved changes. Discard them?", ()=>{
+//     hasUnsavedChanges = false;
+//     addedTask.value = "";
+//     addedTime.value = "";
+//     currentFilter = type;
+//     renderTaskList();
+//   })
+//   return;
+// }
+
