@@ -232,7 +232,6 @@ const setFilter = (type, element)=>{
     if(type === "search"){
       addTasksection.style.display = "none";
       search_container.style.display="flex";
-      return;
     }
     if( type === "trash"){
       addTasksection.style.display="none";
@@ -351,8 +350,7 @@ filteredTask.sort((a,b) =>{
       ${task.isCompleted  && currentFilter !== "completed" 
           ? 'completed-task' 
           : ''}
-      ${!task.isCompleted && new Date(task.taskTime) < new Date() ? "overdue-task" : ''}
-      ">
+      ${!task.isCompleted && new Date(task.taskTime) < new Date() ? "overdue-task" : ''}">
         <span>${task.taskName}</span>
         <span>${task.taskTime}</span>
 
@@ -436,15 +434,5 @@ const delete_task = (id) => {          //id works as parameter
     };
  };
 
-// unsaved changes
-// if (hasUnsavedChanges) {
-//   showConfirm ("You have unsaved changes. Discard them?", ()=>{
-//     hasUnsavedChanges = false;
-//     addedTask.value = "";
-//     addedTime.value = "";
-//     currentFilter = type;
-//     renderTaskList();
-//   })
-//   return;
-// }
+
 
