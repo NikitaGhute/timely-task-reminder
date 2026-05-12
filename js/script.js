@@ -96,6 +96,7 @@ else{
 
   //save after update task
   localStorage.setItem("tasks", JSON.stringify(taskList));   //update task into array       
+  hasUnsavedChanges=false;
   renderTaskList();
   
   addedTask.value = "";  //reset value of task name field
@@ -103,10 +104,12 @@ else{
 };
 
     addedTask.addEventListener("input", () =>{
+      console.log("click on addedTask");
       addedTask.classList.remove("input-error");
       hasUnsavedChanges = addedTask.value.trim() !=="" || addedTime.value !=="";
     });
     addedTime.addEventListener("input", () =>{
+      console.log("addedTime here")
       addedTime.classList.remove("input-error");
       hasUnsavedChanges = addedTask.value.trim() !=="" || addedTime.value !=="";
     });
@@ -116,12 +119,14 @@ let searchText="";
 
 // handle search input and store search text and re-render ui/task list
 const handleSearch = (value)=>{
+  console.log("handleSearch here")
   searchText= value.toLowerCase().trim();
   renderTaskList();
 };
 
 // toggle button for important task
 const toggleImportant=(id) =>{
+  console.log("toggle important")
   taskList = taskList.map(task=>{
     if(task.id === id){
       return{
@@ -139,6 +144,7 @@ hasUnsavedChanges = false;
 
 // function for completed task
   const toggleCompleted=(id)=>{
+    console.log("toggle completed")
     taskList = taskList.map(task =>{
       if (task.id === id){
         return{
@@ -154,6 +160,7 @@ hasUnsavedChanges = false;
 
   // trash restored function 
   const restoreTask = (id) =>{
+    console.log("restored task")
     taskList = taskList.map(task =>{
       if(task.id === id){
         return{...task, isDeleted: false};
@@ -164,6 +171,7 @@ hasUnsavedChanges = false;
     renderTaskList();
   };
     const deleteForever = (id) =>{
+      console.log("deleted forever task")
       const task =taskList.find(t => t.id === id);
       
       showConfirm(`Delete "${task.taskName}" permanently?`, () =>{
@@ -176,13 +184,12 @@ hasUnsavedChanges = false;
 
   // edit task function to be called on click
     const edit_task = (id)=>{
-      
+      console.log("edit task", edit_task)
       const task =taskList.find(t => t.id === id);
       console.log("edit id found")
 
       addedTask.value =task.taskName;
       addedTime.value =task.taskTime;
-
       editId = id;
     }
      
@@ -195,6 +202,7 @@ let currentFilter ="inbox";    //set default value of filter as inbox
 console.log("taskList array", taskList)
 
 const setFilter = (type, element)=>{
+  console.log("currentFilter here")
       if (hasUnsavedChanges){
         showConfirm("You have unsaved changes. Discard them?", ()=>{
           hasUnsavedChanges = false;
@@ -293,6 +301,13 @@ const renderTaskList=()=>{
   )
  }
 
+//  add search into trash
+if(searchText) {
+  filteredTask = filteredTask.filter(task =>
+    task.taskName.toLowerCase().includes(searchText)
+  );
+}
+
          // display page name dynamically
     const filterName= currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
     const count = filteredTask.length;
@@ -317,6 +332,7 @@ filteredTask.sort((a,b) =>{
 
     //  use for each for render every task
     filteredTask.forEach((task) => {
+      console.log("filtered task here")
   const list_create = document.createElement("li");
 
   if (currentFilter === "trash") {
@@ -324,7 +340,6 @@ filteredTask.sort((a,b) =>{
       <div class="list_row">
         <span>${task.taskName}</span>
         <span>${task.taskTime}</span>
-
         <button onclick="restoreTask(${task.id})">Restore</button>
         <button onclick="deleteForever(${task.id})">Delete Permanently</button>
       </div>
@@ -333,7 +348,9 @@ filteredTask.sort((a,b) =>{
   else {
     list_create.innerHTML = `
       <div class="list_row 
-      ${task.isCompleted ? 'completed-task' : ''}
+      ${task.isCompleted  && currentFilter !== "completed" 
+          ? 'completed-task' 
+          : ''}
       ${!task.isCompleted && new Date(task.taskTime) < new Date() ? "overdue-task" : ''}
       ">
         <span>${task.taskName}</span>
@@ -369,7 +386,6 @@ filteredTask.sort((a,b) =>{
   task_list.appendChild(list_create);
 });
           
-
       page_title.classList.remove("animate__animated", "animate__fadeInDown")
         //triger animation again and again
         void page_title.offsetWidth;
@@ -406,6 +422,7 @@ const delete_task = (id) => {          //id works as parameter
 
 // delete confirmation
  const showConfirm = (message, onYes) =>{
+  console.log("show confirm message here", showConfirm)
     confirmMsg.innerText = message;
     confirmBox.style.display = "flex";
 
